@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>api.adm.gestaosala</name>
+    </assembly>
+    <members>
+        <member name="M:api.adm.gestaosala.Controllers.UsuarioController.Insert(api.adm.gestaosala.DTO.UsuarioDTO)">
+            <summary>
+             Insere um novo cliente para cadastro
+            </summary>
+            <param name="usuario">novo cliente que será inserido na base para cadastro</param>     
+            <returns>retorna um objeto Cliente</returns>       
+        </member>
+        <member name="P:api.adm.gestaosala.DTO.UsuarioDTO.Nome">
+            <summary>
+            Nome de usuario
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.adm.gestaosala.DTO.UsuarioDTO.Login">
+            <summary>
+            Login
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.adm.gestaosala.DTO.UsuarioDTO.Senha">
+            <summary>
+            Senha
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:api.adm.gestaosala.Startup">
+            <summary>
+                
+            </summary>
+        </member>
+        <member name="M:api.adm.gestaosala.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+                
+            </summary>
+        </member>
+        <member name="P:api.adm.gestaosala.Startup.Configuration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:api.adm.gestaosala.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:api.adm.gestaosala.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
+            <summary>
+            
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
+    </members>
+</doc>
