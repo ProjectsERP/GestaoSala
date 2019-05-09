@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 using System.IO;
 using AutoMapper;
+using api.adm.gestaosala.Swagger;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace api.adm.gestaosala
 {
@@ -21,16 +23,21 @@ namespace api.adm.gestaosala
         /// <summary>
         ///     
         /// </summary>
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+              .SetBasePath(env.ContentRootPath)
+              .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+              .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+              .AddEnvironmentVariables();
+            Configuration = builder.Build();
         }
 
         /// <summary>
         /// 
         /// </summary>
         public IConfiguration Configuration { get; }
-
 
         /// <summary>
         /// 
@@ -39,7 +46,7 @@ namespace api.adm.gestaosala
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-          
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddAutoMapper();
 
@@ -57,17 +64,34 @@ namespace api.adm.gestaosala
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "Usuario Api", Version = "v1" });
-                var applicationBasePath = PlatformServices.Default.Application.ApplicationBasePath;
-                var applicationName = PlatformServices.Default.Application.ApplicationName;
-                var xmlDocumentPath = Path.Combine(applicationBasePath, $"{applicationName}.xml");
-
-                if (File.Exists(xmlDocumentPath))
+                c.SwaggerDoc("v1", new Info
                 {
-                    c.IncludeXmlComments(xmlDocumentPath);
-                }
+                    Version = "v1",
+                    Title = "API de usuario",
+                    Description = "API de cadastro de usuario",
+                    TermsOfService = "None"
+                });
 
+                var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "api.adm.gestaosala.xml");
+                c.IncludeXmlComments(filePath);
+                c.DescribeAllEnumsAsStrings();
             });
+
+
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new Info { Title = "Usuario Api", Version = "v1" });
+            //    var applicationBasePath = PlatformServices.Default.Application.ApplicationBasePath;
+            //    var applicationName = PlatformServices.Default.Application.ApplicationName;
+            //    var xmlDocumentPath = Path.Combine(applicationBasePath, $"{applicationName}.xml");
+
+
+            //    if (File.Exists(xmlDocumentPath))
+            //    {
+            //        c.IncludeXmlComments(xmlDocumentPath);
+            //    }
+
+            //});
 
             #endregion
         }
