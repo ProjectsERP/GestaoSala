@@ -41,15 +41,8 @@ namespace api.adm.gestaosala.Controllers
         [SwaggerResponse((int)HttpStatusCode.NotFound, Description = "Recurso não encontrado")]
         [SwaggerResponse((int)HttpStatusCode.InternalServerError, Description = "Erro na API")]
         public async Task<IActionResult> Insert([FromBody()] UsuarioDTO usuario)
-        {
-            try
-            {
-                return Ok(await _usuarioManager.Insert(_mapper.Map<Usuario>(usuario)));
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
+        {          
+           return Ok(await _usuarioManager.Insert(_mapper.Map<Usuario>(usuario)));         
         }
     }
 
