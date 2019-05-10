@@ -24,12 +24,6 @@ namespace api.adm.gestaosala.Controllers
             _usuarioManager = usuarioManager;
         }
 
-        [HttpGet]
-        public Task<IActionResult> Get()
-        {
-            return null;
-        }
-
         /// <summary>
         ///  Insere um novo cliente para cadastro
         /// </summary>

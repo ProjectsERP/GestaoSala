@@ -48,7 +48,10 @@ namespace api.adm.gestaosala
         {
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+#pragma warning disable CS0618 // Type or member is obsolete
             services.AddAutoMapper();
+#pragma warning restore CS0618 // Type or member is obsolete
 
             #region Manager
             services.AddTransient<IUsuarioManager, UsuarioManager>();
