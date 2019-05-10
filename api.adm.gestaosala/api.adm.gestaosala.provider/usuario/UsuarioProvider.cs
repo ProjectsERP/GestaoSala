@@ -12,6 +12,29 @@ namespace api.adm.gestaosala.provider
 {
     public class UsuarioProvider : IUsuarioProvider
     {
+        public async Task<IList<Usuario>> GetUsuarioByLogin(string login, string senha)
+        {
+            var usuario = new List<Usuario>();
+            var parameters = new DynamicParameters();
+            parameters.Add("@login", login);
+            parameters.Add("@senha", senha);
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(Configuration.Conn()))
+                {
+                    conn.Open();
+                    usuario = (await conn.QueryAsync<Usuario>("GetUsuarioByLogin", parameters, commandType: CommandType.StoredProcedure)).AsList();
+
+                    return usuario;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<Usuario> Insert(Usuario usuario)
         {
             try
