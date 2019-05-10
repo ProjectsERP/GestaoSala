@@ -25,12 +25,35 @@ namespace api.adm.gestaosala.Controllers
         }
 
         /// <summary>
+        ///  usuario para colsulta de login
+        /// </summary>
+        /// <param name="usuario">usuario para consulta de login</param>     
+        /// <returns></returns>       
+        [HttpPatch]
+        [AllowAnonymous]
+        [SwaggerResponse((int)HttpStatusCode.OK, Description = "Encontrado", Type = typeof(UsuarioDTO))]
+        [SwaggerResponse((int)HttpStatusCode.BadRequest, Description = "Requisição mal-formatada")]
+        [SwaggerResponse((int)HttpStatusCode.Unauthorized, Description = "Erro de Autenticação")]
+        [SwaggerResponse((int)HttpStatusCode.NotFound, Description = "Recurso não encontrado")]
+        [SwaggerResponse((int)HttpStatusCode.Conflict, Description = "Conflito")]
+        [SwaggerResponse((int)HttpStatusCode.InternalServerError, Description = "Erro na API")]
+        public async Task<bool> GetStatusUsuariologado([FromBody()] UsuarioDTO usuario)
+        {          
+            var logado = Ok(await _usuarioManager.GetUsuariobyLogin(usuario.Login, usuario.Senha));
+            if (logado.StatusCode >= 400)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
         ///  Insere um novo cliente para cadastro
         /// </summary>
         /// <param name="usuario">novo cliente que será inserido na base para cadastro</param>     
         /// <returns>retorna um objeto Cliente</returns>       
         [HttpPost]
-        [AllowAnonymous]     
+        [AllowAnonymous]
         [Produces(typeof(UsuarioDTO))]
         [SwaggerResponse((int)HttpStatusCode.OK, Description = "Inserido com sucesso", Type = typeof(UsuarioDTO))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, Description = "Requisição mal-formatada")]
@@ -40,8 +63,8 @@ namespace api.adm.gestaosala.Controllers
         [SwaggerResponse((int)HttpStatusCode.InternalServerError, Description = "Erro na API")]
         public async Task<IActionResult> Insert([FromBody()] UsuarioDTO usuario)
         {
-          //  return NotFound();
-           return Ok(await _usuarioManager.Insert(_mapper.Map<Usuario>(usuario)));         
+            //  return NotFound();
+            return Ok(await _usuarioManager.Insert(_mapper.Map<Usuario>(usuario)));
         }
     }
 

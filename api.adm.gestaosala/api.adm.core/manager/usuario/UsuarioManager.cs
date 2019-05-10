@@ -16,6 +16,20 @@ namespace api.adm.gestaosala.core.manager.usuario
             _usuarioProvider = usuarioProvider;
         }
 
+        public async Task<bool> GetUsuariobyLogin(string login, string senha)
+        {
+            bool usuarioLogado = false;
+            try
+            {
+                usuarioLogado = await _usuarioProvider.GetUsuarioByLogin(login, senha);
+                return usuarioLogado;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }          
+        }
+
         public async Task<Usuario> Insert(Usuario usuario)
         {
             try

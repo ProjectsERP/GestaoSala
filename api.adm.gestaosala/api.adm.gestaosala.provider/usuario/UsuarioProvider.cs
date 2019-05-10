@@ -12,9 +12,9 @@ namespace api.adm.gestaosala.provider
 {
     public class UsuarioProvider : IUsuarioProvider
     {
-        public async Task<IList<Usuario>> GetUsuarioByLogin(string login, string senha)
+        public async Task<bool> GetUsuarioByLogin(string login, string senha)
         {
-            var usuario = new List<Usuario>();
+            bool userLogin = false;
             var parameters = new DynamicParameters();
             parameters.Add("@login", login);
             parameters.Add("@senha", senha);
@@ -24,9 +24,9 @@ namespace api.adm.gestaosala.provider
                 using (SqlConnection conn = new SqlConnection(Configuration.Conn()))
                 {
                     conn.Open();
-                    usuario = (await conn.QueryAsync<Usuario>("GetUsuarioByLogin", parameters, commandType: CommandType.StoredProcedure)).AsList();
+                    userLogin = (await conn.ExecuteScalarAsync<bool>("GetUsuarioByLogin", parameters, commandType: CommandType.StoredProcedure));
 
-                    return usuario;
+                    return userLogin;
                 }
             }
             catch (Exception ex)

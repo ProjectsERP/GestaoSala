@@ -9,5 +9,6 @@ namespace api.adm.gestaosala.core.manager.usuario
     public interface IUsuarioManager
     {
         Task<Usuario> Insert(Usuario usuario);
+        Task<bool> GetUsuariobyLogin(string login, string senha);
     }
 }
