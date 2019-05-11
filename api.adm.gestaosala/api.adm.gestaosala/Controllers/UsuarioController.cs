@@ -13,7 +13,7 @@ namespace api.adm.gestaosala.Controllers
 {
 #pragma warning disable CS1591
 
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class UsuarioController : BaseController
     {
@@ -29,18 +29,20 @@ namespace api.adm.gestaosala.Controllers
         /// </summary>
         /// <param name="usuario">usuario para consulta de login</param>     
         /// <returns></returns>       
-        [HttpPatch]
+        [HttpPost]
         [AllowAnonymous]
-        [SwaggerResponse((int)HttpStatusCode.OK, Description = "Encontrado", Type = typeof(UsuarioDTO))]
+        [SwaggerResponse((int)HttpStatusCode.OK, Description = "Encontrado", Type = typeof(LoginDTO))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, Description = "Requisição mal-formatada")]
         [SwaggerResponse((int)HttpStatusCode.Unauthorized, Description = "Erro de Autenticação")]
         [SwaggerResponse((int)HttpStatusCode.NotFound, Description = "Recurso não encontrado")]
         [SwaggerResponse((int)HttpStatusCode.Conflict, Description = "Conflito")]
         [SwaggerResponse((int)HttpStatusCode.InternalServerError, Description = "Erro na API")]
-        public async Task<bool> GetStatusUsuariologado([FromBody()] UsuarioDTO usuario)
-        {          
+        public async Task<bool> GetLogin([FromBody()] LoginDTO usuario)
+        {
+            // usar sha256 aqui
+
             var logado = Ok(await _usuarioManager.GetUsuariobyLogin(usuario.Login, usuario.Senha));
-            if (logado.StatusCode >= 400)
+            if (logado.StatusCode >= 400 || (bool)logado.Value == false)
             {
                 return false;
             }

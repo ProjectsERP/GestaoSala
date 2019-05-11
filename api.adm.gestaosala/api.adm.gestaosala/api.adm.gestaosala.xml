@@ -4,12 +4,31 @@
         <name>api.adm.gestaosala</name>
     </assembly>
     <members>
+        <member name="M:api.adm.gestaosala.Controllers.UsuarioController.GetLogin(api.adm.gestaosala.DTO.LoginDTO)">
+            <summary>
+             usuario para colsulta de login
+            </summary>
+            <param name="usuario">usuario para consulta de login</param>     
+            <returns></returns>       
+        </member>
         <member name="M:api.adm.gestaosala.Controllers.UsuarioController.Insert(api.adm.gestaosala.DTO.UsuarioDTO)">
             <summary>
              Insere um novo cliente para cadastro
             </summary>
             <param name="usuario">novo cliente que será inserido na base para cadastro</param>     
             <returns>retorna um objeto Cliente</returns>       
+        </member>
+        <member name="P:api.adm.gestaosala.DTO.LoginDTO.Login">
+            <summary>
+            Login
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.adm.gestaosala.DTO.LoginDTO.Senha">
+            <summary>
+            Senha
+            </summary>
+            <value></value>
         </member>
         <member name="P:api.adm.gestaosala.DTO.UsuarioDTO.Nome">
             <summary>
