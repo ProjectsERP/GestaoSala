@@ -11,6 +11,8 @@ using System.IO;
 using AutoMapper;
 using api.adm.gestaosala.Swagger;
 using Swashbuckle.AspNetCore.Swagger;
+using api.adm.gestaosala.core.manager.sala;
+using api.adm.gestaosala.provider.sala;
 
 namespace api.adm.gestaosala
 {
@@ -55,11 +57,13 @@ namespace api.adm.gestaosala
 
             #region Manager
             services.AddTransient<IUsuarioManager, UsuarioManager>();
+            services.AddTransient<ISalaManager, SalaManager>();
 
             #endregion
 
             #region Providers
             services.AddTransient<IUsuarioProvider, UsuarioProvider>();
+            services.AddTransient<ISalaProvider, SalaProvider>();
 
             #endregion
 
@@ -70,8 +74,8 @@ namespace api.adm.gestaosala
                 c.SwaggerDoc("v1", new Info
                 {
                     Version = "v1",
-                    Title = "API de usuario",
-                    Description = "API de cadastro de usuario",
+                    Title = "API de integração",
+                    Description = "API de integração com sistema",
                     TermsOfService = "None"
                 });
 

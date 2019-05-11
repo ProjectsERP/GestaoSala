@@ -4,6 +4,13 @@
         <name>api.adm.gestaosala</name>
     </assembly>
     <members>
+        <member name="M:api.adm.gestaosala.Controllers.SalaController.Post(api.adm.gestaosala.DTO.SalaDTO)">
+            <summary>
+             Post para inserir nova sala
+            </summary>
+            <param name="salaDTO">Cadastro de nova sala</param>     
+            <returns></returns>       
+        </member>
         <member name="M:api.adm.gestaosala.Controllers.UsuarioController.GetLogin(api.adm.gestaosala.DTO.LoginDTO)">
             <summary>
              usuario para colsulta de login
@@ -27,6 +34,18 @@
         <member name="P:api.adm.gestaosala.DTO.LoginDTO.Senha">
             <summary>
             Senha
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.adm.gestaosala.DTO.SalaDTO.SalaTitulo">
+            <summary>
+            Título da Sala
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.adm.gestaosala.DTO.SalaDTO.SalaDescricao">
+            <summary>
+            Descrição da Sala
             </summary>
             <value></value>
         </member>
