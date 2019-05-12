@@ -1,6 +1,7 @@
 ﻿using api.adm.gestaosala.core.manager.usuario;
 using api.adm.gestaosala.core.models;
 using api.adm.gestaosala.DTO;
+using api.adm.gestaosala.Util;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -39,9 +40,9 @@ namespace api.adm.gestaosala.Controllers
         [SwaggerResponse((int)HttpStatusCode.InternalServerError, Description = "Erro na API")]
         public async Task<bool> GetLogin([FromBody()] LoginDTO usuario)
         {
-            // usar sha256 aqui
+            string senha = Util.Hash.GerarHash(usuario.Senha);
 
-            var logado = Ok(await _usuarioManager.GetUsuariobyLogin(usuario.Login, usuario.Senha));
+            var logado = Ok(await _usuarioManager.GetUsuariobyLogin(usuario.Login, senha));
             if (logado.StatusCode >= 400 || (bool)logado.Value == false)
             {
                 return false;
@@ -65,8 +66,14 @@ namespace api.adm.gestaosala.Controllers
         [SwaggerResponse((int)HttpStatusCode.InternalServerError, Description = "Erro na API")]
         public async Task<IActionResult> Insert([FromBody()] UsuarioDTO usuario)
         {
-            //  return NotFound();
-            return Ok(await _usuarioManager.Insert(_mapper.Map<Usuario>(usuario)));
+            var user = new UsuarioDTO()
+            {
+                Nome = usuario.Nome,
+                Login = usuario.Login,
+                Senha = Hash.GerarHash(usuario.Senha)
+        };
+
+            return Ok(await _usuarioManager.Insert(_mapper.Map<Usuario>(user)));
         }
     }
 
