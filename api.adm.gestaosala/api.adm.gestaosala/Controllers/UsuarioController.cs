@@ -40,9 +40,9 @@ namespace api.adm.gestaosala.Controllers
         [SwaggerResponse((int)HttpStatusCode.InternalServerError, Description = "Erro na API")]
         public async Task<bool> GetLogin([FromBody()] LoginDTO usuario)
         {
-            string senha = Util.Hash.GerarHash(usuario.Senha);
+            //string senha = Util.Hash.GerarHash(usuario.Senha);
 
-            var logado = Ok(await _usuarioManager.GetUsuariobyLogin(usuario.Login, senha));
+            var logado = Ok(await _usuarioManager.GetUsuariobyLogin(usuario.Login, usuario.Senha));
             if (logado.StatusCode >= 400 || (bool)logado.Value == false)
             {
                 return false;

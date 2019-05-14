@@ -9,5 +9,8 @@ namespace api.adm.gestaosala.core.providers
     public interface ISalaProvider
     {
         Task<Sala> Insert(Sala sala);
+        Task<IList<Sala>> GetSalas();
+        Task<int> Delete(int salaId);
+        Task<Sala> GetSalaBySalaId(int salaId);
     }
 }

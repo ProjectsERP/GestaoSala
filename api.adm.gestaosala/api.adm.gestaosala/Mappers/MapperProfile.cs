@@ -1,4 +1,5 @@
 ﻿using api.adm.gestaosala.core.models;
+using api.adm.gestaosala.core.models.agenda;
 using api.adm.gestaosala.core.models.sala;
 using api.adm.gestaosala.DTO;
 using AutoMapper;
@@ -14,10 +15,11 @@ namespace api.adm.gestaosala.Mappers
     {
         public MapperProfile()
         {
-            #region Usuario
+            #region mapeamentos
 
             CreateMap<Usuario, UsuarioDTO>().ReverseMap();
             CreateMap<Sala, SalaDTO>().ReverseMap();
+            CreateMap<AgendaSalaModel, AgendaSalaDTO>().ReverseMap();
 
             #endregion
         }

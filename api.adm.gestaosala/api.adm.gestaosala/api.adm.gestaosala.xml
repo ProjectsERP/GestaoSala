@@ -4,11 +4,48 @@
         <name>api.adm.gestaosala</name>
     </assembly>
     <members>
+        <member name="M:api.adm.gestaosala.Controllers.AgendaSalaController.Get">
+            <summary>
+             busca todas salas agendadas na base
+            </summary>   
+            <returns></returns>       
+        </member>
+        <member name="M:api.adm.gestaosala.Controllers.AgendaSalaController.Post(api.adm.gestaosala.DTO.AgendaSalaDTO)">
+            <summary>
+             insere um agendamento
+            </summary>
+            <param name="agendaSalaDTO">agendamento</param>     
+            <returns></returns>       
+        </member>
+        <member name="M:api.adm.gestaosala.Controllers.AgendaSalaController.GetSalaAgendada(api.adm.gestaosala.DTO.AgendaSalaDTO)">
+            <summary>
+             busca salas agendadas na base pelo id da sala e data de agendamento
+            </summary>   
+            <returns></returns>       
+        </member>
         <member name="M:api.adm.gestaosala.Controllers.SalaController.Post(api.adm.gestaosala.DTO.SalaDTO)">
             <summary>
-             Post para inserir nova sala
+             cadastra uma sala nova
             </summary>
             <param name="salaDTO">Cadastro de nova sala</param>     
+            <returns></returns>       
+        </member>
+        <member name="M:api.adm.gestaosala.Controllers.SalaController.Get">
+            <summary>
+             busca salas na base
+            </summary>   
+            <returns></returns>       
+        </member>
+        <member name="M:api.adm.gestaosala.Controllers.SalaController.Get(System.Int32)">
+            <summary>
+             busca salas na base por id de sala
+            </summary>   
+            <returns></returns>       
+        </member>
+        <member name="M:api.adm.gestaosala.Controllers.SalaController.Delete(System.Int32)">
+            <summary>
+             Deleta uma Sala cadastrada por id
+            </summary>   
             <returns></returns>       
         </member>
         <member name="M:api.adm.gestaosala.Controllers.UsuarioController.GetLogin(api.adm.gestaosala.DTO.LoginDTO)">
@@ -24,6 +61,36 @@
             </summary>
             <param name="usuario">novo cliente que será inserido na base para cadastro</param>     
             <returns>retorna um objeto Cliente</returns>       
+        </member>
+        <member name="P:api.adm.gestaosala.DTO.AgendaSalaDTO.AgendamentoId">
+            <summary>
+            Id do agendamento
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.adm.gestaosala.DTO.AgendaSalaDTO.SalaId">
+            <summary>
+            Id da Sala
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.adm.gestaosala.DTO.AgendaSalaDTO.AgendamentoInicial">
+            <summary>
+            Data inicial
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.adm.gestaosala.DTO.AgendaSalaDTO.AgendamentoFinal">
+            <summary>
+            Data final
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:api.adm.gestaosala.DTO.AgendaSalaDTO.AgendamentoStatus">
+            <summary>
+            Status
+            </summary>
+            <value></value>      
         </member>
         <member name="P:api.adm.gestaosala.DTO.LoginDTO.Login">
             <summary>

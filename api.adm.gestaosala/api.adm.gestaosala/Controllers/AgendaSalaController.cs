@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using api.adm.gestaosala.core.manager.sala;
-using api.adm.gestaosala.core.models.sala;
+using api.adm.gestaosala.core.manager.agenda;
+using api.adm.gestaosala.core.models.agenda;
 using api.adm.gestaosala.DTO;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -17,39 +16,21 @@ namespace api.adm.gestaosala.Controllers
 
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class SalaController : BaseController
+    public class AgendaSalaController : BaseController
     {
-        private readonly ISalaManager _salaManager;
-       
-        public SalaController(ISalaManager salaManager, IMapper mapper): base(mapper)
+        private readonly IAgendaSalaManager _agendaSalaManager;
+
+        public AgendaSalaController(IAgendaSalaManager agendaSalaManager, IMapper mapper) : base(mapper)
         {
-            _salaManager = salaManager;
+            _agendaSalaManager = agendaSalaManager;
         }
 
         /// <summary>
-        ///  cadastra uma sala nova
-        /// </summary>
-        /// <param name="salaDTO">Cadastro de nova sala</param>     
-        /// <returns></returns>       
-        [HttpPost]
-        [SwaggerResponse((int)HttpStatusCode.OK, Description = "Inserido com Sucesso", Type = typeof(SalaDTO))]
-        [SwaggerResponse((int)HttpStatusCode.BadRequest, Description = "Requisição mal-formatada")]
-        [SwaggerResponse((int)HttpStatusCode.Unauthorized, Description = "Erro de Autenticação")]
-        [SwaggerResponse((int)HttpStatusCode.NotFound, Description = "Recurso não encontrado")]
-        [SwaggerResponse((int)HttpStatusCode.Conflict, Description = "Conflito")]
-        [SwaggerResponse((int)HttpStatusCode.InternalServerError, Description = "Erro na API")]
-        public async Task<IActionResult> Post([FromBody()] SalaDTO salaDTO)
-        {
-            return Ok(await _salaManager.Insert(_mapper.Map<Sala>(salaDTO)));
-        }
-
-
-        /// <summary>
-        ///  busca salas na base
+        ///  busca todas salas agendadas na base
         /// </summary>   
         /// <returns></returns>       
         [HttpGet]
-        [SwaggerResponse((int)HttpStatusCode.OK, Description = "Registros localizados", Type = typeof(Sala))]
+        [SwaggerResponse((int)HttpStatusCode.OK, Description = "Registros localizados", Type = typeof(AgendaSalaDTO))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, Description = "Requisição mal-formatada")]
         [SwaggerResponse((int)HttpStatusCode.Unauthorized, Description = "Erro de Autenticação")]
         [SwaggerResponse((int)HttpStatusCode.NotFound, Description = "Recurso não encontrado")]
@@ -57,41 +38,58 @@ namespace api.adm.gestaosala.Controllers
         [SwaggerResponse((int)HttpStatusCode.InternalServerError, Description = "Erro na API")]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _salaManager.GetSalas());
+            return Ok(await _agendaSalaManager.GetAgendaSala());
         }
 
         /// <summary>
-        ///  busca salas na base por id de sala
-        /// </summary>   
+        ///  insere um agendamento
+        /// </summary>
+        /// <param name="agendaSalaDTO">agendamento</param>     
         /// <returns></returns>       
-        [HttpGet("{salaId}")]
-        [SwaggerResponse((int)HttpStatusCode.OK, Description = "Registros localizados", Type = typeof(Sala))]
+        [HttpPost]
+        [SwaggerResponse((int)HttpStatusCode.OK, Description = "Inserido com Sucesso", Type = typeof(AgendaSalaDTO))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, Description = "Requisição mal-formatada")]
         [SwaggerResponse((int)HttpStatusCode.Unauthorized, Description = "Erro de Autenticação")]
         [SwaggerResponse((int)HttpStatusCode.NotFound, Description = "Recurso não encontrado")]
         [SwaggerResponse((int)HttpStatusCode.Conflict, Description = "Conflito")]
         [SwaggerResponse((int)HttpStatusCode.InternalServerError, Description = "Erro na API")]
-        public async Task<IActionResult> Get(int salaId)
+        public async Task<IActionResult> Post([FromBody()] AgendaSalaDTO agendaSalaDTO)
         {
-            return Ok(await _salaManager.GetSalasBySalaId(salaId));
+            return Ok(await _agendaSalaManager.Insert(_mapper.Map<AgendaSalaModel>(agendaSalaDTO)));
         }
 
         /// <summary>
-        ///  Deleta uma Sala cadastrada por id
+        ///  busca salas agendadas na base pelo id da sala e data de agendamento
         /// </summary>   
         /// <returns></returns>       
+        [HttpPost]
+        [SwaggerResponse((int)HttpStatusCode.OK, Description = "Registros localizados", Type = typeof(AgendaSalaDTO))]
+        [SwaggerResponse((int)HttpStatusCode.BadRequest, Description = "Requisição mal-formatada")]
+        [SwaggerResponse((int)HttpStatusCode.Unauthorized, Description = "Erro de Autenticação")]
+        [SwaggerResponse((int)HttpStatusCode.NotFound, Description = "Recurso não encontrado")]
+        [SwaggerResponse((int)HttpStatusCode.Conflict, Description = "Conflito")]
+        [SwaggerResponse((int)HttpStatusCode.InternalServerError, Description = "Erro na API")]
+        public async Task<bool> GetSalaAgendada([FromBody()] AgendaSalaDTO agendaSalaDTO)
+        {
+            var agendado = Ok(await _agendaSalaManager.GetVerificaAgendamento(_mapper.Map<AgendaSalaModel>(agendaSalaDTO)));
+            if (agendado.StatusCode >= 400 || (bool)agendado.Value == false)
+            {
+                return false;
+            }
+            return true;
+        }
 
-        [HttpDelete("{salaId}")]
+        [HttpDelete("{agendamentoSalaId}/{salaId}")]
         [SwaggerResponse((int)HttpStatusCode.OK, Description = "Registro Deletado", Type = null)]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, Description = "Requisição mal-formatada")]
         [SwaggerResponse((int)HttpStatusCode.Unauthorized, Description = "Erro de Autenticação")]
         [SwaggerResponse((int)HttpStatusCode.NotFound, Description = "Recurso não encontrado")]
         [SwaggerResponse((int)HttpStatusCode.Conflict, Description = "Conflito")]
         [SwaggerResponse((int)HttpStatusCode.InternalServerError, Description = "Erro na API")]
-        public async Task<IActionResult> Delete(int salaId)
+        public async Task<IActionResult> Delete(int agendamentoSalaId, int salaId)
         {
-            return Ok(await _salaManager.Delete(salaId));
+            return Ok(await _agendaSalaManager.Delete(agendamentoSalaId, salaId));
         }
     }
-}
 #pragma warning disable CS1591
+}

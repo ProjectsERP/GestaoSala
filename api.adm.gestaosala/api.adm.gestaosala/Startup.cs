@@ -13,6 +13,8 @@ using api.adm.gestaosala.Swagger;
 using Swashbuckle.AspNetCore.Swagger;
 using api.adm.gestaosala.core.manager.sala;
 using api.adm.gestaosala.provider.sala;
+using api.adm.gestaosala.core.manager.agenda;
+using api.adm.gestaosala.provider.agenda;
 
 namespace api.adm.gestaosala
 {
@@ -58,12 +60,14 @@ namespace api.adm.gestaosala
             #region Manager
             services.AddTransient<IUsuarioManager, UsuarioManager>();
             services.AddTransient<ISalaManager, SalaManager>();
+            services.AddTransient<IAgendaSalaManager, AgendaSalaManager>();
 
             #endregion
 
             #region Providers
             services.AddTransient<IUsuarioProvider, UsuarioProvider>();
             services.AddTransient<ISalaProvider, SalaProvider>();
+            services.AddTransient<IAgendaSalaProvider, AgendaSalaProvider>();
 
             #endregion
 

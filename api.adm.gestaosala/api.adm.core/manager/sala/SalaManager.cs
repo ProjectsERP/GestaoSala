@@ -16,6 +16,45 @@ namespace api.adm.gestaosala.core.manager.sala
             _salaProvider = salaProvider;
         }
 
+        public async Task<int> Delete(int salaId)
+        {
+            try
+            {
+                var salaManager = (await _salaProvider.Delete(salaId));
+                return salaManager;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<IList<Sala>> GetSalas()
+        {
+            try
+            {
+                var salaManager = (await _salaProvider.GetSalas());
+                return salaManager;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<Sala> GetSalasBySalaId(int salaId)
+        {
+            try
+            {
+                var salaManager = (await _salaProvider.GetSalaBySalaId(salaId));
+                return salaManager;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<Sala> Insert(Sala sala)
         {
             try

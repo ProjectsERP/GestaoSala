@@ -9,6 +9,8 @@ namespace api.adm.gestaosala.core.manager.sala
     public interface ISalaManager
     {
         Task<Sala> Insert(Sala sala);
+        Task<IList<Sala>> GetSalas();
+        Task<int> Delete(int salaId);
+        Task<Sala> GetSalasBySalaId(int salaId);
     }
-
 }
