@@ -5,8 +5,14 @@ using api.adm.gestaosala.Util;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 
@@ -14,15 +20,17 @@ namespace api.adm.gestaosala.Controllers
 {
 #pragma warning disable CS1591
 
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]/[action]")]  
     [ApiController]
     public class UsuarioController : BaseController
     {
         private readonly IUsuarioManager _usuarioManager;
+        private readonly IConfiguration _configuration;
 
-        public UsuarioController(IUsuarioManager usuarioManager, IMapper mapper) : base(mapper)
+        public UsuarioController(IUsuarioManager usuarioManager, IConfiguration configuration, IMapper mapper) : base(mapper)
         {
             _usuarioManager = usuarioManager;
+            _configuration = configuration;
         }
 
         /// <summary>
@@ -40,14 +48,16 @@ namespace api.adm.gestaosala.Controllers
         [SwaggerResponse((int)HttpStatusCode.InternalServerError, Description = "Erro na API")]
         public async Task<bool> GetLogin([FromBody()] LoginDTO usuario)
         {
-            //string senha = Util.Hash.GerarHash(usuario.Senha);
+            string senha = Util.Hash.GerarHash(usuario.Senha);
 
-            var logado = Ok(await _usuarioManager.GetUsuariobyLogin(usuario.Login, usuario.Senha));
+            var logado = Ok(await _usuarioManager.GetUsuariobyLogin(usuario.Login, senha));
             if (logado.StatusCode >= 400 || (bool)logado.Value == false)
             {
+               
                 return false;
             }
-            return true;
+           
+             return true;          
         }
 
         /// <summary>

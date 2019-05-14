@@ -15,7 +15,7 @@ namespace api.adm.gestaosala.Controllers
 {
 #pragma warning disable CS1591
 
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]/[action]")]   
     [ApiController]
     public class SalaController : BaseController
     {
@@ -48,6 +48,7 @@ namespace api.adm.gestaosala.Controllers
         ///  busca salas na base
         /// </summary>   
         /// <returns></returns>       
+       
         [HttpGet]
         [SwaggerResponse((int)HttpStatusCode.OK, Description = "Registros localizados", Type = typeof(Sala))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, Description = "Requisição mal-formatada")]

@@ -15,6 +15,13 @@ using api.adm.gestaosala.core.manager.sala;
 using api.adm.gestaosala.provider.sala;
 using api.adm.gestaosala.core.manager.agenda;
 using api.adm.gestaosala.provider.agenda;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System;
+using System.Threading.Tasks;
 
 namespace api.adm.gestaosala
 {
@@ -88,22 +95,6 @@ namespace api.adm.gestaosala
                 c.DescribeAllEnumsAsStrings();
             });
 
-
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", new Info { Title = "Usuario Api", Version = "v1" });
-            //    var applicationBasePath = PlatformServices.Default.Application.ApplicationBasePath;
-            //    var applicationName = PlatformServices.Default.Application.ApplicationName;
-            //    var xmlDocumentPath = Path.Combine(applicationBasePath, $"{applicationName}.xml");
-
-
-            //    if (File.Exists(xmlDocumentPath))
-            //    {
-            //        c.IncludeXmlComments(xmlDocumentPath);
-            //    }
-
-            //});
-
             #endregion
         }
 
@@ -125,8 +116,7 @@ namespace api.adm.gestaosala
             }
 
             app.UseHttpsRedirection();
-            app.UseMvc();
-
+            app.UseMvc();         
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>

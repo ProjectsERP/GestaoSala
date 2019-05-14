@@ -23,6 +23,8 @@ namespace api.adm.gestaosala.core.manager.usuario
             {
                 usuarioLogado = await _usuarioProvider.GetUsuarioByLogin(login, senha);
                 return usuarioLogado;
+
+
             }
             catch (Exception ex)
             {
